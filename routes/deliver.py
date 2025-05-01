@@ -7,7 +7,7 @@ import os
 from models import GeneticReport, User
 from logic.pdf_renderer import render_markdown_to_pdf
 from logic.mailer import send_report_email
-from main import SessionLocal
+from database import SessionLocal
 
 router = APIRouter()
 
