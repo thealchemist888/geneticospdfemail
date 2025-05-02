@@ -19,12 +19,12 @@ async def deliver_report(request: ReportDeliveryRequest):
     db = SessionLocal()
     try:
         # Get the report
-        report = db.query(GeneticReport).filter(GeneticReport.report_id == request.report_id).first()
+        report = db.query(GeneticReport).filter(GeneticReport.id == request.report_id).first()
         if not report:
             raise HTTPException(status_code=404, detail="Report not found")
         
         # Get the user's email
-        user = db.query(User).filter(User.user_id == report.user_id).first()
+        user = db.query(User).filter(User.id == report.user_id).first()
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         
