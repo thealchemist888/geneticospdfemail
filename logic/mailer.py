@@ -14,7 +14,7 @@ def send_report_email(to_email: str, pdf_path: str) -> None:
         pdf_content = pdf_file.read()
     
     try:
-        response = resend.Emails.send({
+        params = {
             "from": "Genetic OS <onboarding@resend.dev>",
             "to": to_email,
             "subject": "Your Genetic OS Report is Ready",
@@ -25,7 +25,9 @@ def send_report_email(to_email: str, pdf_path: str) -> None:
                     "content": base64.b64encode(pdf_content).decode('utf-8')
                 }
             ]
-        })
+        }
+        
+        response = resend.send_email(**params)
         print(f"Email sent successfully: {response}")
     except Exception as e:
         print(f"Error sending email: {str(e)}")
