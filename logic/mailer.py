@@ -14,9 +14,9 @@ def send_report_email(to_email: str, pdf_path: str) -> None:
         pdf_content = pdf_file.read()
     
     try:
-        response = resend.emails.send({
+        response = resend.Emails.send({
             "from": "Genetic OS <onboarding@resend.dev>",
-            "to": "normangrande@gmail.com"",
+            "to": to_email
             "subject": "Your Genetic OS Report is Ready",
             "text": "Your Genetic OS report is ready! Please find it attached to this email.",
             "attachments": [
