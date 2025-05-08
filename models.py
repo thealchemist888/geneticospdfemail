@@ -9,9 +9,9 @@ Base = declarative_base()
 class GeneticReport(Base):
     __tablename__ = "genetic_reports"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    raw_assistant_response = Column(Text, nullable=False)
+    id = Column(UUID, primary_key=True)
+    user_id = Column(UUID)
+    raw_assistant_response = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     # Relationship
@@ -20,6 +20,6 @@ class GeneticReport(Base):
 class User(Base):
     __tablename__ = "users"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUID, primary_key=True)
     email = Column(String)
     reports = relationship("GeneticReport", back_populates="user") 
