@@ -8,8 +8,8 @@ def test_email_sending():
         f.write(b"Test PDF content")
     
     try:
-        # Try to send the email
-        send_report_email("test@example.com", pdf_path)
+        # Using Resend's testing email address
+        send_report_email("delivered@resend.dev", pdf_path)
         print("Email sent successfully")
     except Exception as e:
         print(f"Error sending email: {str(e)}")
