@@ -45,7 +45,7 @@ Delivers a report as a PDF via email.
 Request body:
 ```json
 {
-  "report_id": "uuid-here"
+  "id": "uuid-here"
 }
 ```
 

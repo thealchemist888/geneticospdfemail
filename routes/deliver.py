@@ -17,17 +17,17 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 class ReportDeliveryRequest(BaseModel):
-    report_id: UUID
+    id: UUID
 
 @router.post("/report")
 async def deliver_report(request: ReportDeliveryRequest):
-    logger.info(f"Processing report delivery request for report_id: {request.report_id}")
+    logger.info(f"Processing report delivery request for id: {request.id}")
     db = SessionLocal()
     try:
         # Get the report
-        report = db.query(GeneticReport).filter(GeneticReport.id == request.report_id).first()
+        report = db.query(GeneticReport).filter(GeneticReport.id == request.id).first()
         if not report:
-            logger.error(f"Report not found: {request.report_id}")
+            logger.error(f"Report not found: {request.id}")
             raise HTTPException(status_code=404, detail="Report not found")
         
         logger.info(f"Found report for user_id: {report.user_id}")
