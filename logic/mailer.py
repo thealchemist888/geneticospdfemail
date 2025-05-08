@@ -1,4 +1,4 @@
-import resend
+from resend import Resend
 import os
 from typing import BinaryIO
 from dotenv import load_dotenv
@@ -8,23 +8,24 @@ import base64
 load_dotenv()
 
 def send_report_email(to_email: str, pdf_path: str) -> None:
-    resend.api_key = os.getenv("RESEND_API_KEY")
+    resend = Resend(api_key=os.getenv("RESEND_API_KEY"))
     
     with open(pdf_path, "rb") as pdf_file:
         pdf_content = pdf_file.read()
-        pdf_base64 = base64.b64encode(pdf_content).decode('utf-8')
     
-    params = {
-        "from": "onboarding@resend.dev",  # Using Resend's test domain
-        "to": ["normangrande@gmail.com"],  # Hardcoded recipient
+    resend.emails.send({
+        "from": "no-reply@geneticos.app",
+        "to": to_email,
         "subject": "Your Genetic OS Report is Ready",
         "text": "Your Genetic OS report is ready! Please find it attached to this email.",
-        "attachments": [{
-            "filename": "genetic_report.pdf",
-            "content": pdf_base64
-        }]
-    }
-    
+        "attachments": [
+            {
+                "filename": "genetic_report.pdf",
+                "content": pdf_content
+            }
+        ]
+    })
+
     try:
         email = resend.Emails.send(params)
         print(f"Email sent successfully: {email}")
