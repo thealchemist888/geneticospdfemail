@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from uuid import UUID
 import tempfile
 import os
@@ -17,14 +17,14 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 class ReportDeliveryRequest(BaseModel):
-    id: UUID
+    id: UUID = Field(..., description="The UUID of the report to deliver")
 
 @router.post("/report")
 async def deliver_report(request: ReportDeliveryRequest):
     logger.info(f"Processing report delivery request for id: {request.id}")
     db = SessionLocal()
     try:
-        # Get the report
+        # Get the report using the id field
         report = db.query(GeneticReport).filter(GeneticReport.id == request.id).first()
         if not report:
             logger.error(f"Report not found: {request.id}")
